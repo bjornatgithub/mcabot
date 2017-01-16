@@ -9,6 +9,7 @@ import env     # enviroment control (temperature, pressure, light)
 import cas     # collision avoidance system (ultrasound collision detection)
 import motor   # motor actor to move robot
 import track   # tracking sensor to align on black track line
+import com     # communication abstraction layer
 
 
 # General Settings
