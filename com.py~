@@ -1,0 +1,3 @@
+class robocom(object):
+    '''polimorph com object (wifi,bt,eth)'''
+    def __init__(self):

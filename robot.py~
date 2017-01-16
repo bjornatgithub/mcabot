@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+import time
+import RPi.GPIO as GPIO
+import env
+import cas
+import motor
+
+
+#global initialization
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+e = env.Env()
+c = cas.Cas()
+m = motor.Motor() 
+
+# This is the main control software of the pi bot
+while True:
+    if e.is_ctrl_on():
+        e.status_on()
+
+        c.update()
+        
+        if c.is_collision_alert():
+            # emergency brake
+            m.stop()
+            e.alert()
+
+            # clear situation and move left
+ #           m.backward()
+ #           time.sleep(0.5)
+ #           m.hardleft()
+ #           time.sleep(0.5)
+
+
+        else:
+            e.clear_alert()
+
+            m.forward()
+            
+    else:
+        e.status_off()
+        m.stop()
+
+    time.sleep(0.1)

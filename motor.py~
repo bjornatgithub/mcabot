@@ -1,0 +1,74 @@
+import RPi.GPIO as GPIO
+import time
+
+# Motor control IO Pins...
+IO_MOTOR_A_FWD = 10 #Motor A forward
+IO_MOTOR_A_BWD =  9 #Motor A backward
+IO_MOTOR_B_FWD =  8 #Motor B backward
+IO_MOTOR_B_BWD =  7 #Motor B backward
+
+PWM_FREQ = 20
+PWM_DUTY = 30
+PWM_STOP =  0
+
+class Motor(object):
+    'Motor conrtoler'
+
+    def __init__(self):
+        GPIO.setup(IO_MOTOR_A_FWD, GPIO.OUT)
+        GPIO.setup(IO_MOTOR_A_BWD, GPIO.OUT)
+        GPIO.setup(IO_MOTOR_B_FWD, GPIO.OUT)
+        GPIO.setup(IO_MOTOR_B_BWD, GPIO.OUT)
+
+        self._pwm_a_fwd = GPIO.PWM(IO_MOTOR_A_FWD, PWM_FREQ)
+        self._pwm_a_bwd = GPIO.PWM(IO_MOTOR_A_BWD, PWM_FREQ)
+        self._pwm_b_fwd = GPIO.PWM(IO_MOTOR_B_FWD, PWM_FREQ)
+        self._pwm_b_bwd = GPIO.PWM(IO_MOTOR_B_BWD, PWM_FREQ)
+
+        self._pwm_a_fwd.start(PWM_STOP)
+        self._pwm_a_bwd.start(PWM_STOP)
+        self._pwm_b_fwd.start(PWM_STOP)
+        self._pwm_b_bwd.start(PWM_STOP)
+
+
+    def stop(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_STOP)
+
+    def forward(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_STOP)
+
+    def backward(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_DUTY)        
+
+    def left(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_STOP)
+
+    def right(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_STOP)        
+
+    def hardleft(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_DUTY)
+
+    def hardright(self):
+        self._pwm_a_fwd.ChangeDutyCycle(PWM_STOP)
+        self._pwm_a_bwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_b_fwd.ChangeDutyCycle(PWM_DUTY)
+        self._pwm_b_bwd.ChangeDutyCycle(PWM_STOP)
