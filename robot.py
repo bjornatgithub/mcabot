@@ -4,13 +4,16 @@
 import time
 import RPi.GPIO as GPIO
 
-# robo control modules
+# robo HAL (hardware abstraction layer) modules
 import env     # enviroment control (temperature, pressure, light)
 import cas     # collision avoidance system (ultrasound collision detection)
 import motor   # motor actor to move robot
 import track   # tracking sensor to align on black track line
 import com     # communication abstraction layer
 
+# robo App modules
+import tracking # control to follow black line
+# @ Avanish: here import your remote module
 
 # General Settings
 SAMPLE_TIME  = 0.001 # sample time for robot control
@@ -29,7 +32,12 @@ class Robot(object):
                 self._track_sensor = track.Track()                
                 self._motor_actor  = motor.Motor()
                 self._com          = com()
-
+                
+                # moduls used for robot application...
+                self._track        = Tracking()
+                # @Avanish: here instantiate our remote module
+                
+                
         def run(self):
 
                 # This is the control feedback loop (EVA von Neumann)
@@ -41,6 +49,8 @@ class Robot(object):
                 # V (Verarbeitung - execution, calculation, control)
                 if "REMOTE" == self._com.get_cmd():
                         # this is your turn buddy...
+                        # @ Avanish: example how you can use your remote module,
+                        # you have to adapt implementation
                         
                         if "FOR" == self._com.get_attr():
                                 print "move forward"
@@ -57,8 +67,7 @@ class Robot(object):
                 elif "TRACK" == self._com.get_cmd():
 
                         # this is my turn
-                        self.track()
-                        time.sleep(SAMPLE_TIME)
+                        self.track(self._track_sensor, self._motor_actor)
                 else:
                         # unknown command set error indication
                         print "unkown command received..."
