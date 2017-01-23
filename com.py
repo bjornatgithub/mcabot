@@ -1,43 +1,37 @@
-# import wifi something ;)
+#!/usr/bin/env python
+import paho.mqtt.client as mqtt
+from threading import Thread
 
-# Note that this or lower modules implement the protocol dteials...
-# the interface provides an apstract to basic in/output
+import cfg
 
-class robocom(object):
-    '''polimorph com object (wifi,bt,eth)'''
+
+def on_connect(client, userdata, rc):
+    print("connected with result code " + str(rc))
+    client.subscribe("robo/ctrl/1")
+
+    
+def on_message(client, userdata, msg):
+
+    # enter critical region...
+    
+    if not cfg.queue.full():
+        
+        # enqueue incoming control command
+        cfg.queue.put(msg.payload, False)
+        print "prodcue queue... ", msg.topic + ":" + str(msg.payload)
+
+    
+class com_thread(Thread):
+    '''robot com thread (mqtt)'''
     def __init__(self):
-        self._cmd  = 0
-        self._attr = +
-
-        # init wifi, bt, or eth setting up socket
-        # init_wifi()
-
-    def input():
-        # do communication with outer world here
+        super(com_thread, self).__init__()
         
-        # TODO: implement me with wifi, bt, or eth...
-        # either client server protocol receive
-        # combined in transmit call...
-        
-        # receive_wifi()
-        
-        # or producer consumer where robot is consumer
-        # taking incomming events from a queue produced
-        # by wifi, bt or eth task in the background ;)
+        self.client = mqtt.Client()
+        self.client.on_connect = on_connect
+        self.client.on_message = on_message
 
-        # read_queue()             
+        self.client.connect("test.mosquitto.org", 1883, 60)
 
-        # update next robo command generated from above
-        # functions...
-        self._cmd  = REMOTE
-        self._attr = FOR
-
-    def output():
-        # here comes the send() call implementation which is
-        # just needed if client server approach is used
-
-    def get_cmd():
-        return self._cmd
-
-    def get_attr():
-        return self._attr
+    def run(self):
+        print "run com thread..."
+        self.client.loop_forever()
