@@ -3,8 +3,8 @@ import com
 import control 
 
 # __main__
-comm  = com.com_thread()
-ctrl  = control.ctrl_thread()
+comm  = com.Com()
+ctrl  = control.Control()
 
 comm.start()
 ctrl.start()

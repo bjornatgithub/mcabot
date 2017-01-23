@@ -21,10 +21,10 @@ def on_message(client, userdata, msg):
         print "prodcue queue... ", msg.topic + ":" + str(msg.payload)
 
     
-class com_thread(Thread):
+class Com(Thread):
     '''robot com thread (mqtt)'''
     def __init__(self):
-        super(com_thread, self).__init__()
+        super(Com, self).__init__()
         
         self.client = mqtt.Client()
         self.client.on_connect = on_connect
