@@ -38,7 +38,7 @@ G2    = "2"
 G3    = "3"
 G4    = "4"
 
-remoteSubCommands = (FOR, BACK, RIGHT, LEFT)
+remoteSubCommands = (FOR, BACK, RIGHT, LEFT, STOP)
 
 def isCommand(cmd):
     return cmd in commands
