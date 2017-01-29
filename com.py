@@ -7,7 +7,7 @@ import cfg
 
 def on_connect(client, userdata, rc):
     print("connected with result code " + str(rc))
-    client.subscribe("robo/ctrl/1")
+    client.subscribe("mcabot")
 
     
 def on_message(client, userdata, msg):

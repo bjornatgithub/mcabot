@@ -28,7 +28,7 @@ def gosoftRight():
     
 def goLeft():
     print "move left"
-    cfg.drive.lef(gear)
+    cfg.drive.left(gear)
 
     
 def gosoftLeft():

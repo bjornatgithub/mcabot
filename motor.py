@@ -7,8 +7,8 @@ MOTOR_GEAR3 = 60
 MOTOT_GEAR4 = 70
 
 # Motor control IO Pins...
-IO_MOTOR_A_FWD =  10 #Right Motor A forward
-IO_MOTOR_A_BWD = 9 #Right Motor A backward
+IO_MOTOR_A_FWD =  9 #Right Motor A forward
+IO_MOTOR_A_BWD = 10 #Right Motor A backward
 IO_MOTOR_B_FWD =  8 #Left Motor B backward
 IO_MOTOR_B_BWD =  7 #Left Motor B backward
 
