@@ -124,12 +124,14 @@ class Motor(object):
         self.forward_left_wheel(duty + 30)
         self.forward_right_wheel(duty - 30)
 
+        
 
     # control forward speed of left wheel
     # input duty - duty cycle PWM {0 to 100}
     def forward_right_wheel(self, duty):
         duty = self._adjust_duty_range(duty * PWM_ADJ_A)
         self._pwm_a_fwd.ChangeDutyCycle(duty)
+        self._pwm_a_bwd.ChangeDutyCycle(0)
         
 
     # control forward speed of right wheel
@@ -137,20 +139,23 @@ class Motor(object):
     def forward_left_wheel(self, duty):        
         duty = self._adjust_duty_range(duty * PWM_ADJ_B)        
         self._pwm_b_fwd.ChangeDutyCycle(duty)
+        self._pwm_b_bwd.ChangeDutyCycle(0)
         
 
     # control backward speed of left wheel
     # input duty - duty cycle PWM {0 to 100}        
     def backward_right_wheel(self, duty):        
         duty = self._adjust_duty_range(duty * PWM_ADJ_B)                
-        self._pwm_b_bwd.ChangeDutyCycle(duty)
+        self._pwm_a_fwd.ChangeDutyCycle(0)
+        self._pwm_a_bwd.ChangeDutyCycle(duty)        
         
 
     # control backward speed of right wheel
     # input duty - duty cycle PWM {0 to 100}        
     def backward_left_wheel(self, duty):        
         duty = self._adjust_duty_range(duty * PWM_ADJ_A)        
-        self._pwm_a_bwd.ChangeDutyCycle(duty)
+        self._pwm_b_fwd.ChangeDutyCycle(0)
+        self._pwm_b_bwd.ChangeDutyCycle(duty)
 
         
     def _adjust_duty_range(self, duty):
