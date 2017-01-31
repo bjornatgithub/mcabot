@@ -67,6 +67,8 @@ handler = {cfg.FOR : goForward, cfg.BACK : goBackward, cfg.RIGHT : goRight, cfg.
 
 def updateRemote(command):
     
+    # implement collision avoidance here...
+    
     if cfg.isRemoteSubCommand(command):
         # execute next move...
         handler[command]()
