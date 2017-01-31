@@ -3,8 +3,7 @@ from syslog import syslog
 import cfg
 import motor
 
-gear    = motor.MOTOR_GEAR1
-
+gear    = motor.MOTOR_GEAR2
 
 def goForward():
     print "move forward"
