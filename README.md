@@ -1,6 +1,9 @@
 # mcabot
 software for scalable robot platform based on pi
 
+Overview:
+https://github.com/bjornatgithub/mcabot/blob/master/iot_bot.pptx
+
 software design:
 https://repository.genmymodel.com/bjornatgithub/mcabot
 
